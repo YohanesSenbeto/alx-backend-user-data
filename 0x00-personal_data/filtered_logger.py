@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 
+"""
 Module for filtering sensitive data and logging.
 """
 
@@ -18,8 +18,9 @@ def filter_datum(
 ) -> str:
     """Replace sensitive data in a log message with a redaction string."""
     for entry in fields:
+        ms = f"{entry}={redaction}{separator}"
         message = re.sub(
-            rf"{entry}=(.*?){separator}", f"{entry}={redaction}{separator}", message
+            rf"{entry}=(.*?){separator}", ms, message
         )
     return message
 
@@ -73,7 +74,7 @@ def create_database(conn: mysql.connector.connection.MySQLConnection) -> None:
 
 
 def main() -> None:
-    """Read data from the database and log it with sensitive fields redacted."""
+    """Read data from the database and log it with sensitive fields redact"""
     logger = get_logger()
     db = get_db()
     create_database(db)
